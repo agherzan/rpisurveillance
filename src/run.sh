@@ -48,4 +48,4 @@ until [ -z "$(netstat | grep $RTSP_PORT | grep TIME_WAIT)" ]; do
 done
 
 log "Start RTSP server..."
-/app/v4l2rtspserver/v4l2rtspserver -F $FRAMERATE -W $V4L2_W -H $V4L2_H -P $RTSP_PORT -U foo:$(echo -n $USERNAME:$REALM:$PASSWORD | md5sum | cut -d- -f1) /dev/video0
+/app/v4l2rtspserver/v4l2rtspserver -F $FRAMERATE -W $V4L2_W -H $V4L2_H -P $RTSP_PORT -R $REALM -U $USERNAME:$(echo -n $USERNAME:$REALM:$PASSWORD | md5sum | cut -d- -f1) /dev/video0
