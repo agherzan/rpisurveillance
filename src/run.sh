@@ -12,7 +12,6 @@ V4L2_W=${V4L2_W:-1920}
 V4L2_H=${V4L2_H:-1080}
 USERNAME=${USERNAME:-root}
 PASSWORD=${PASSWORD:-root}
-REALM=${REALM:-root}
 
 . /app/helpers.sh
 
@@ -48,4 +47,10 @@ until [ -z "$(netstat | grep $RTSP_PORT | grep TIME_WAIT)" ]; do
 done
 
 log "Start RTSP server..."
-/app/v4l2rtspserver/v4l2rtspserver -F $FRAMERATE -W $V4L2_W -H $V4L2_H -P $RTSP_PORT -R $REALM -U $USERNAME:$(echo -n $USERNAME:$REALM:$PASSWORD | md5sum | cut -d- -f1) /dev/video0
+ARGUMENTS="-F $FRAMERATE -W $V4L2_W -H $V4L2_H -P $RTSP_PORT"
+if [ -n "$REALM" ]; then
+    ARGUMENTS="$ARGUMENTS -R $REALM -U $USERNAME:$(echo -n $USERNAME:$REALM:$PASSWORD | md5sum | cut -d- -f1)"
+else
+    log WARN "Running with no authentication."
+fi
+/app/v4l2rtspserver/v4l2rtspserver $ARGUMENTS /dev/video0
