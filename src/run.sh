@@ -14,12 +14,7 @@ USERNAME=${USERNAME:-root}
 PASSWORD=${PASSWORD:-root}
 REALM=${REALM:-root}
 
-# Get the absolute script location
-pushd `dirname $0` > /dev/null 2>&1
-SCRIPTPATH=`pwd`
-popd > /dev/null 2>&1
-
-. $SCRIPTPATH/helpers.sh
+. /app/helpers.sh
 
 if modprobe -n --first-time $V4L2_KMOD &> /dev/null; then
     log "Load kernel module $V4L2_KMOD..."
