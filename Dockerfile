@@ -7,7 +7,7 @@ RUN rm -rf /var/lib/apt/lists/*
 
 # Install v4l2rtspserver
 RUN git clone https://github.com/mpromonet/v4l2rtspserver.git /app/v4l2rtspserver \
-    && ( cd /app/v4l2rtspserver  && git checkout v0.0.2 && cmake . && make)
+    && ( cd /app/v4l2rtspserver  && git checkout v0.0.6 && cmake . && make)
 
 # Source files
 COPY ./src/ /app/
